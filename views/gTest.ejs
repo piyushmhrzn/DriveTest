@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('layouts/header') -%>
+<body>
+    <%- include('layouts/navbar') -%>
+
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url('assets/img/g_test.png')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>G Test</h1>
+                        <span class="subheading">Start preparing for your G test today</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content-->
+    <main class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <p>Enter your license number to extract your information</p>
+                    <div class="my-5">
+                        <form id="licenseForm" action="#" data-sb-form-api-token="API_TOKEN">
+                            <!-- License Number -->
+                            <div class="form-floating">
+                                <input class="form-control" id="license" type="text" placeholder="Enter your license number..." data-sb-validations="required" />
+                                <label for="license">License Number</label>
+                                <div class="invalid-feedback" data-sb-feedback="license:required">License Number is required.</div>
+                            </div>
+                            <br />
+                             <!-- Success message-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">License Number Extraction Successful</div>
+                                </div>
+                            </div>
+                            <!-- Error message-->
+                            <div class="d-none" id="submitErrorMessage">
+                                <div class="text-center text-danger mb-3">Invalid License Number</div>
+                            </div>
+
+                            <!-- Submit Button-->
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('layouts/footer') -%>
+    <%- include('layouts/scripts') -%>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('layouts/header') -%>
+<body>
+    <%- include('layouts/navbar') -%>
+
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url('assets/img/g2_test.png')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>G2 Test</h1>
+                        <span class="subheading">Learn from our mentors for your successful G2 test</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content-->
+    <main class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <p>Please enter your information for booking your g2 test</p>
+                    <div class="my-5">
+                        <form id="contactForm" action="#" data-sb-form-api-token="API_TOKEN">
+
+                            <fieldset>
+                                <legend class="text-center">Personal Information</legend>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- First Name -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="firstName" type="text" placeholder="Enter your first name..." data-sb-validations="required" />
+                                            <label for="firstName">First Name</label>
+                                            <div class="invalid-feedback" data-sb-feedback="firstName:required">First Name is required.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Last Name -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="lastName" type="text" placeholder="Enter your last name..." data-sb-validations="required" />
+                                            <label for="lastName">Last Name</label>
+                                            <div class="invalid-feedback" data-sb-feedback="lastName:required">Last Name is required.</div>
+                                        </div>
+                                    </div>
+                                </div>                           
+                                <!-- License Number -->
+                                <div class="form-floating">
+                                    <input class="form-control" id="license" type="text" placeholder="Enter your license number..." data-sb-validations="required" />
+                                    <label for="license">License Number</label>
+                                    <div class="invalid-feedback" data-sb-feedback="license:required">License Number is required.</div>
+                                </div>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Age-->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="age" type="number" placeholder="Enter your age..." data-sb-validations="required" />
+                                            <label for="age">Age</label>
+                                            <div class="invalid-feedback" data-sb-feedback="age:required">Age is required.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Date of Birth -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="dob" type="date" placeholder="Enter your date of birth..." data-sb-validations="required" />
+                                            <label for="dob">Date of Birth</label>
+                                            <div class="invalid-feedback" data-sb-feedback="dob:required">Date of Birth is required.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                             
+                            <br /><br />
+
+                            <fieldset>
+                                <legend class="text-center">Car Information</legend>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Company -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="company" type="text" placeholder="Enter car company..." data-sb-validations="required" />
+                                            <label for="company">Company</label>
+                                            <div class="invalid-feedback" data-sb-feedback="company:required">Company is required.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Model -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="model" type="text" placeholder="Enter car model..." data-sb-validations="required" />
+                                            <label for="model">Model</label>
+                                            <div class="invalid-feedback" data-sb-feedback="model:required">Model is required.</div>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Year -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="year" type="text" placeholder="Enter car release year..." data-sb-validations="required" />
+                                            <label for="year">Year Released</label>
+                                            <div class="invalid-feedback" data-sb-feedback="year:required">Car release year is required.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Plate Number -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="plateNumber" type="text" placeholder="Enter car plate number..." data-sb-validations="required" />
+                                            <label for="plateNumber">Plate number</label>
+                                            <div class="invalid-feedback" data-sb-feedback="plateNumber:required">Plate number is required.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <br />
+                             <!-- Success message-->
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">Data entered successfully!</div>
+                                </div>
+                            </div>
+                            <!-- Error message-->
+                            <div class="d-none" id="submitErrorMessage">
+                                <div class="text-center text-danger mb-3">Data entry error!</div>
+                            </div>
+
+                            <!-- Submit Button-->
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('layouts/footer') -%>
+    <%- include('layouts/scripts') -%>
+</body>
+</html>
