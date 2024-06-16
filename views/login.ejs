@@ -25,33 +25,20 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Login to your Kiosk DriveTest account</p>
                     <div class="my-5">
-                        <form id="loginForm" action="#" data-sb-form-api-token="API_TOKEN">
+                        <form id="loginForm" action="#">
                              <!-- Username -->
                             <div class="form-floating">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your username..." data-sb-validations="required" />
+                                <input class="form-control" id="name" type="text" placeholder="Enter your username..."/>
                                 <label for="name">Username</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Username is required.</div>
                             </div>
                              <!-- Password -->
                             <div class="form-floating">
-                                <input class="form-control" id="password" type="password" placeholder="Enter your password..." data-sb-validations="required" />
+                                <input class="form-control" id="password" type="password" placeholder="Enter your password..."/>
                                 <label for="password">Password</label>
-                                <div class="invalid-feedback" data-sb-feedback="password:required">Password is required.</div>
                             </div>
                             <br />
-                             <!-- Success message-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Sign in successful!</div>
-                                </div>
-                            </div>
-                            <!-- Error message-->
-                            <div class="d-none" id="submitErrorMessage">
-                                <div class="text-center text-danger mb-3">Sign in error!</div>
-                            </div>
-
                             <!-- Submit Button-->
-                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Login</button>
+                            <button class="btn btn-primary text-uppercase" id="loginButton" type="submit">Login</button>
                         </form>
                     </div>
                 </div>

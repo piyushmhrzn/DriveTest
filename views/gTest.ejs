@@ -25,28 +25,38 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Enter your license number to extract your information</p>
                     <div class="my-5">
-                        <form id="licenseForm" action="#" data-sb-form-api-token="API_TOKEN">
+                        <form method="get" action="/findUser" id="licenseForm">
                             <!-- License Number -->
                             <div class="form-floating">
-                                <input class="form-control" id="license" type="text" placeholder="Enter your license number..." data-sb-validations="required" />
-                                <label for="license">License Number</label>
-                                <div class="invalid-feedback" data-sb-feedback="license:required">License Number is required.</div>
+                                <input class="form-control" id="license_number" name="license_number" type="text" placeholder="Enter your license number..."/>
+                                <label for="license_number">License Number</label>
                             </div>
                             <br />
-                             <!-- Success message-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">License Number Extraction Successful</div>
+                            <!-- Submit Button-->
+                            <button class="btn btn-primary text-uppercase" id="searchButton" type="submit">Search</button>
+                        </form>
+
+                        <% if(user){ %>
+                            <div class="row gx-4 gx-lg-5 justify-content-center">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="post-preview">
+                                        <h3 class="post-title mt-5">Driver Information</h3>
+                                        <br />    
+                                        <p class="post-meta">First Name: <%= user.firstName %></p>
+                                        <p class="post-meta">Last Name: <%= user.lastName %></p>
+                                        <p class="post-meta">License Number: <%= user.license %></p>
+                                        <p class="post-meta">Age: <%= user.age %></p>
+                                        <p class="post-meta">Date of Birth: <%= user.dob.toDateString() %></p>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- Error message-->
-                            <div class="d-none" id="submitErrorMessage">
-                                <div class="text-center text-danger mb-3">Invalid License Number</div>
+                        <% } else if (isUser){ %>
+                            <div class="alert alert-danger mt-5">
+                                Sorry! User Not Found!!!
                             </div>
-
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Search</button>
-                        </form>
+                            <p class="mt-4">You can go to G2 page to add user:</p>
+                            <a href="/g2" class="btn btn-success text-uppercase">G2 Page -></a>
+                        <% } %>
                     </div>
                 </div>
             </div>

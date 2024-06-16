@@ -1,13 +1,22 @@
 const express = require('express');
 const ejs = require('ejs');
-const app = new express();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const User = require('./models/User');
 const port = 3000;
 
-// Use public folder
+const app = new express();
 app.use(express.static(__dirname + '/public'));
-
-// Use Embedded Javascript as templating engine
 app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// Connect to MongodDB
+mongoose.connect('mongodb+srv://piyushmhzrn:206E9C9271@cluster0.egbj65n.mongodb.net/')
+    .then(() => { console.log('Successfully connected to MonogDB'); })
+    .catch((error) => { console.log('ERROR: ', error); });
+
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -15,7 +24,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/g', (req, res) => {
-    res.render('gTest');
+    res.render('gTest', {
+        user: null,
+        isUser: false
+    });
 });
 
 app.get('/g2', (req, res) => {
@@ -26,8 +38,39 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/error', (req, res) => {
+    res.render('errorPage');
+});
 
-// LISTENER
+// Save user data from file to mongoDB
+app.post('/saveUserData', async (req, res) => {
+    try {
+        const newUser = new User(req.body);
+        await newUser.save();
+        res.redirect('/');
+    } catch (error) {
+        console.error('ERROR:', error);
+        res.redirect('/error');
+    }
+});
+
+// Find user using license number
+app.get('/findUser', async (req, res) => {
+    try {
+        const license_number = req.query.license_number;
+        const user = await User.findOne({ license: license_number });
+
+        if (!user) {
+            return res.render('gTest', { user: null, isUser: true });
+        }
+
+        res.render('gTest', { user, isUser: false });
+    } catch (error) {
+        console.error('ERROR:', error);
+        res.redirect('/error');
+    }
+});
+
 app.listen(port, () => {
     console.log(`App listening on port: ${port}`);
 });
