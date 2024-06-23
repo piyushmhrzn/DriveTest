@@ -58,7 +58,9 @@ app.post('/saveUserData', async (req, res) => {
 app.get('/findUser', async (req, res) => {
     try {
         const license_number = req.query.license_number;
-        const user = await User.findOne({ license: license_number });
+        const user = await User.findOne(
+            { license: license_number }
+        );
 
         if (!user) {
             return res.render('gTest', { user: null, isUser: true });
@@ -70,6 +72,36 @@ app.get('/findUser', async (req, res) => {
         res.redirect('/error');
     }
 });
+
+// Update only the car details of the user
+app.post('/updateCarDetail', async (req, res) => {
+    try {
+        const license_number = req.body.license_number;
+        const updatedCarDetails = {
+            'carDetails.company': req.body.company,
+            'carDetails.model': req.body.model,
+            'carDetails.year': req.body.year,
+            'carDetails.plateNumber': req.body.plateNumber
+        };
+
+        const user = await User.findOneAndUpdate(
+            { license: license_number },
+            { $set: updatedCarDetails },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.render('gTest', { user: null, isUser: true });
+        }
+
+        res.render('gTest', { user, isUser: false });
+    } catch (error) {
+        console.error('ERROR:', error);
+        res.redirect('/error');
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`App listening on port: ${port}`);
