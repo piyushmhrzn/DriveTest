@@ -56,7 +56,7 @@
                                 <label for="user_type">User Type</label>
                             </div>
                             <br />
-                            <div id="alertMessage"></div>
+                            <div id="alertMessageSignUp"></div>
                             <!-- Submit Button-->
                             <button class="btn btn-primary text-uppercase" id="signUpButton" type="submit">Sign up</button>
                         </form>
@@ -70,16 +70,16 @@
                         <form id="loginForm" action="/loginUser" method="post">
                              <!-- Username -->
                             <div class="form-floating">
-                                <input class="form-control" id="loginUsername" name="username" type="text" placeholder="Enter your username..." required/>
+                                <input class="form-control" id="login_username" name="username" type="text" placeholder="Enter your username..." required/>
                                 <label for="username">Username</label>
                             </div>
                              <!-- Password -->
                             <div class="form-floating">
-                                <input class="form-control" id="loginPassword" name="password" type="password" placeholder="Enter your password..." required/>
+                                <input class="form-control" id="login_password" name="password" type="password" placeholder="Enter your password..." required/>
                                 <label for="password">Password</label>
                             </div>
                             <br />
-                            <div id="alertMessage"></div>
+                            <div id="alertMessageLogin"></div>
                             <!-- Submit Button-->
                             <button class="btn btn-primary text-uppercase" id="loginButton" type="submit">Login</button>
                         </form>
@@ -94,10 +94,18 @@
     <script>
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('signup') && urlParams.get('signup') === 'success') {
-                $('#alertMessage').html('<div class="alert alert-success" role="alert">Signup successful! Please login.</div>');
-            } else if (urlParams.has('signup') && urlParams.get('signup') === 'error') {
-                $('#alertMessage').html('<div class="alert alert-danger" role="alert">An error occurred. Please try again.</div>');
+            if (urlParams.has('signup') && urlParams.get('signup') === 'success_signup') {
+                $('#alertMessageSignUp').html('<div class="alert alert-success" role="alert">Signup successful! Please login.</div>');
+            } else if (urlParams.has('signup') && urlParams.get('signup') === 'error_username') {
+                $('#alertMessageSignUp').html('<div class="alert alert-danger" role="alert">Username already exists.</div>');
+            } else if (urlParams.has('signup') && urlParams.get('signup') === 'error_signup') {
+                $('#alertMessageSignUp').html('<div class="alert alert-danger" role="alert">An error occurred. Please try again.</div>');
+            } else if (urlParams.has('login') && urlParams.get('login') === 'error_username') {
+                $('#alertMessageLogin').html('<div class="alert alert-danger" role="alert">Error! User not found.</div>');
+            } else if (urlParams.has('login') && urlParams.get('login') === 'error_password') {
+                $('#alertMessageLogin').html('<div class="alert alert-danger" role="alert">Incorrect password! Please try again.</div>');
+            } else if (urlParams.has('login') && urlParams.get('login') === 'error') {
+                $('#alertMessageLogin').html('<div class="alert alert-danger" role="alert">Login failed. Please try again.</div>');
             }
         });
     </script>

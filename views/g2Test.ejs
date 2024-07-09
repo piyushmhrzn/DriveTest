@@ -23,88 +23,166 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <p>Please enter your information for booking your g2 test</p>
+                    <p>Update your information for booking your g2 test</p>
+                    <div id="alertMessageBox"></div>
                     <div class="my-5">
-                        <form method="post" action="/saveUserData" id="contactForm" >
 
-                            <p class="text-center text-uppercase">Personal Information</p>
-                            <div class="row justify-space-between">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- First Name -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="firstName" name="firstName" type="text" placeholder="Enter your first name..." required/>
-                                        <label for="firstName">First Name</label>
+                        <% if (isDefaultLicense) { %>
+                            <form method="post" action="/saveUserData" id="defaultUserInfo" >
+                                <p class="text-center text-uppercase">Personal Information</p>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- First Name -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="firstName" name="firstName" type="text" placeholder="Enter your first name..." required/>
+                                            <label for="firstName">First Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Last Name -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="lastName" name="lastName" type="text" placeholder="Enter your last name..." required/>
+                                            <label for="lastName">Last Name</label>
+                                        </div>
+                                    </div>
+                                </div>                           
+                                <!-- License Number -->
+                                <div class="form-floating">
+                                    <input class="form-control" id="license" name="license" type="text" placeholder="Enter your license number..." required/>
+                                    <label for="license">License Number</label>
+                                </div>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Age-->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="age" name="age" type="number" placeholder="Enter your age..." required/>
+                                            <label for="age">Age</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Date of Birth -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your date of birth..." required/>
+                                            <label for="dob">Date of Birth</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Last Name -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="lastName" name="lastName" type="text" placeholder="Enter your last name..." required/>
-                                        <label for="lastName">Last Name</label>
-                                    </div>
-                                </div>
-                            </div>                           
-                            <!-- License Number -->
-                            <div class="form-floating">
-                                <input class="form-control" id="license" name="license" type="text" placeholder="Enter your license number..." required/>
-                                <label for="license">License Number</label>
-                            </div>
-                            <div class="row justify-space-between">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Age-->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="age" name="age" type="number" placeholder="Enter your age..." required/>
-                                        <label for="age">Age</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Date of Birth -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="dob" name="dob" type="date" placeholder="Enter your date of birth..." required/>
-                                        <label for="dob">Date of Birth</label>
-                                    </div>
-                                </div>
-                            </div>
-                             
-                            <br />
+                                
+                                <br />
 
-                            <p class="text-center text-uppercase">Car Information</p>
-                            <div class="row justify-space-between">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Company -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="company" name="carDetails.company" type="text" placeholder="Enter car company..."/>
-                                        <label for="company">Company</label>
+                                <p class="text-center text-uppercase">Car Information</p>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Company -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="company" name="carDetails[company]" type="text" placeholder="Enter car company..."/>
+                                            <label for="company">Company</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Model -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="model" name="carDetails[model]" type="text" placeholder="Enter car model..."/>
+                                            <label for="model">Model</label>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Year -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="year" name="carDetails[year]" type="text" placeholder="Enter car release year..."/>
+                                            <label for="year">Year Released</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Plate Number -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="plateNumber" name="carDetails[plateNumber]" type="text" placeholder="Enter car plate number..."/>
+                                            <label for="plateNumber">Plate number</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Model -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="model" name="carDetails.model" type="text" placeholder="Enter car model..."/>
-                                        <label for="model">Model</label>
+                                <br />
+                                <!-- Submit Button-->
+                                <button class="btn btn-primary text-uppercase" id="saveButton" type="submit">Save</button>
+                            </form>
+                        <% } else { %>
+                            <form method="post" action="/saveUserData" id="updatedUserInfo" >
+                                <p class="text-center text-uppercase">Personal Information</p>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- First Name -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="firstNameUpdated" name="firstName" type="text" value="<%= user.firstName %>" required/>
+                                            <label for="firstName">First Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Last Name -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="lastNameUpdated" name="lastName" type="text" value="<%= user.lastName %>" required/>
+                                            <label for="lastName">Last Name</label>
+                                        </div>
+                                    </div>
+                                </div>                           
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Age-->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="ageUpdated" name="age" type="number" value="<%= user.age %>" required/>
+                                            <label for="age">Age</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Date of Birth -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="dobUpdated" name="dob" type="date" value="<%= user.dob.toISOString().split('T')[0] %>" required/>
+                                            <label for="dob">Date of Birth</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>      
-                            <div class="row justify-space-between">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Year -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="year" name="carDetails.year" type="text" placeholder="Enter car release year..."/>
-                                        <label for="year">Year Released</label>
+                                
+                                <br />
+
+                                <p class="text-center text-uppercase">Car Information</p>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Company -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="companyUpdated" name="company" type="text" value="<%= user.carDetails.company %>"/>
+                                            <label for="company">Company</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Model -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="modelUpdated" name="model" type="text" value="<%= user.carDetails.model %>"/>
+                                            <label for="model">Model</label>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Year -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="yearUpdated" name="year" type="text" value="<%= user.carDetails.year %>"/>
+                                            <label for="year">Year Released</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <!-- Plate Number -->
+                                        <div class="form-floating">
+                                            <input class="form-control" id="plateNumberUpdated" name="plateNumber" type="text" value="<%= user.carDetails.plateNumber %>"/>
+                                            <label for="plateNumber">Plate number</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <!-- Plate Number -->
-                                    <div class="form-floating">
-                                        <input class="form-control" id="plateNumber" name="carDetails.plateNumber" type="text" placeholder="Enter car plate number..."/>
-                                        <label for="plateNumber">Plate number</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <br />
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary text-uppercase" id="saveButton" type="submit">Save</button>
-                        </form>
+                                <br />
+                                <!-- Submit Button-->
+                                <button class="btn btn-primary text-uppercase" id="updateButton" type="submit">Save</button>
+                            </form>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -113,5 +191,13 @@
 
     <%- include('layouts/footer') -%>
     <%- include('layouts/scripts') -%>
+    <script>
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
+                $('#alertMessageBox').html('<div class="alert alert-danger" role="alert">Failed to update user info. Please try again.</div>');
+            }
+        });
+    </script>
 </body>
 </html>

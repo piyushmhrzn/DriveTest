@@ -1,9 +1,17 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 // Sign up User
 exports.signUpUser = async (req, res) => {
     try {
         const { username, password, user_type } = req.body;
+
+        const existingUser = await User.findOne({ username });
+
+        if (existingUser) {
+            req.session.error_msg = 'Username already exists.';
+            return res.redirect('/login?signup=error_username');
+        }
 
         const newUser = new User({
             username,
@@ -12,41 +20,72 @@ exports.signUpUser = async (req, res) => {
         });
 
         await newUser.save();
-        res.redirect('/login?signup=success');
+        req.session.success_msg = 'Signup successful! Please login.';
+        res.redirect('/login?signup=success_signup');
     } catch (error) {
         console.error('ERROR:', error);
-        res.redirect('/login?signup=error');
+        req.session.error_msg = 'Signup failed. Please try again.';
+        res.redirect('/login?signup=error_signup');
     }
 };
 
-// Save user data from G2 page form
-exports.saveUserData = async (req, res) => {
+// Login User
+exports.loginUser = async (req, res) => {
     try {
-        const newUser = new User(req.body);
-        await newUser.save();
-        res.redirect('/');
-    } catch (error) {
-        console.error('ERROR:', error);
-        res.redirect('/error');
-    }
-};
-
-// Find user using license number
-exports.findUser = async (req, res) => {
-    try {
-        const license_number = req.query.license_number;
-        const user = await User.findOne(
-            { license: license_number }
-        );
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
 
         if (!user) {
-            return res.render('gTest', { user: null, isUser: true });
+            req.session.error_msg = 'Error! User not found.';
+            return res.redirect('/login?login=error_username');
         }
 
-        res.render('gTest', { user, isUser: false });
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            req.session.error_msg = 'Incorrect password! Please try again.';
+            return res.redirect('/login?login=error_password');
+        }
+
+        req.session.user = {
+            userId: user._id.toString(),
+            userType: user.userType
+        };
+
+        res.redirect('/g2');
     } catch (error) {
         console.error('ERROR:', error);
-        res.redirect('/error');
+        req.session.error_msg = 'Login failed. Please try again.';
+        res.redirect('/login?login=error');
+    }
+};
+
+// Update user data from G2 page
+exports.saveUserData = async (req, res) => {
+    try {
+        const { firstName, lastName, license, age, dob, carDetails } = req.body;
+        const userId = req.session.user.userId;
+
+        const updatedData = {
+            firstName,
+            lastName,
+            license,
+            age,
+            dob,
+            carDetails: {
+                company: carDetails.company,
+                model: carDetails.model,
+                year: carDetails.year,
+                plateNumber: carDetails.plateNumber
+            }
+        };
+
+        await User.findByIdAndUpdate(userId, updatedData, { new: true });
+        res.redirect('/g');
+    } catch (error) {
+        console.error('ERROR:', error);
+        req.session.error_msg = 'Failed to update user info. Please try again.';
+        res.redirect('/g2?error=error_update');
     }
 };
 
@@ -54,6 +93,7 @@ exports.findUser = async (req, res) => {
 exports.updateCarDetails = async (req, res) => {
     try {
         const license_number = req.body.license_number;
+
         const updatedCarDetails = {
             'carDetails.company': req.body.company,
             'carDetails.model': req.body.model,
@@ -68,13 +108,14 @@ exports.updateCarDetails = async (req, res) => {
         );
 
         if (!user) {
-            return res.render('gTest', { user: null, isUser: true });
+            return res.render('gTest');
         }
 
-        res.render('gTest', { user, isUser: false });
+        res.redirect('/g');
     } catch (error) {
         console.error('ERROR:', error);
-        res.redirect('/error');
+        req.session.error_msg = 'Failed to update car details. Please try again.';
+        res.redirect('/g?error=error_update');
     }
 };
 
