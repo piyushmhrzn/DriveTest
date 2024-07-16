@@ -23,6 +23,8 @@ const userSchema = new Schema({
 userSchema.pre('save', function (next) {
     const user = this;
 
+    if (!user.isModified('license')) return next();
+
     bcrypt.hash(user.license, 10, (error, hash) => {
         if (error) { return next(error); }
         user.license = hash;
@@ -33,6 +35,8 @@ userSchema.pre('save', function (next) {
 // Encrypting password before saving to database
 userSchema.pre('save', function (next) {
     const user = this;
+
+    if (!user.isModified('password')) return next();
 
     bcrypt.hash(user.password, 10, (error, hash) => {
         if (error) { return next(error); }

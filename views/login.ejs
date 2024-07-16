@@ -56,7 +56,10 @@
                                 <label for="user_type">User Type</label>
                             </div>
                             <br />
-                            <div id="alertMessageSignUp"></div>
+
+                            <!-- Flash messages -->
+                            <%- include('layouts/alertMessage') -%>
+
                             <!-- Submit Button-->
                             <button class="btn btn-primary text-uppercase" id="signUpButton" type="submit">Sign up</button>
                         </form>
@@ -79,7 +82,15 @@
                                 <label for="password">Password</label>
                             </div>
                             <br />
-                            <div id="alertMessageLogin"></div>
+
+                            <!-- Flash messages -->
+                            <% if (error_message && error_message.length > 0) { %>       
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <%= error_message %>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <% } %>
+
                             <!-- Submit Button-->
                             <button class="btn btn-primary text-uppercase" id="loginButton" type="submit">Login</button>
                         </form>
@@ -91,23 +102,5 @@
 
     <%- include('layouts/footer') -%>
     <%- include('layouts/scripts') -%>
-    <script>
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('signup') && urlParams.get('signup') === 'success_signup') {
-                $('#alertMessageSignUp').html('<div class="alert alert-success" role="alert">Signup successful! Please login.</div>');
-            } else if (urlParams.has('signup') && urlParams.get('signup') === 'error_username') {
-                $('#alertMessageSignUp').html('<div class="alert alert-danger" role="alert">Username already exists.</div>');
-            } else if (urlParams.has('signup') && urlParams.get('signup') === 'error_signup') {
-                $('#alertMessageSignUp').html('<div class="alert alert-danger" role="alert">An error occurred. Please try again.</div>');
-            } else if (urlParams.has('login') && urlParams.get('login') === 'error_username') {
-                $('#alertMessageLogin').html('<div class="alert alert-danger" role="alert">Error! User not found.</div>');
-            } else if (urlParams.has('login') && urlParams.get('login') === 'error_password') {
-                $('#alertMessageLogin').html('<div class="alert alert-danger" role="alert">Incorrect password! Please try again.</div>');
-            } else if (urlParams.has('login') && urlParams.get('login') === 'error') {
-                $('#alertMessageLogin').html('<div class="alert alert-danger" role="alert">Login failed. Please try again.</div>');
-            }
-        });
-    </script>
 </body>
 </html>

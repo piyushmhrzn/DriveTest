@@ -11,7 +11,11 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
                         <h1>Dashboard</h1>
-                        <span class="subheading">Welcome to DriveTest Booking Kiosk</span>
+                        <span class="subheading">Welcome
+                            <% if (user) { %>
+                                <b><%= user.firstName %> <%= user.lastName  %>,</b>
+                            <% } %>
+                            to Kiosk DriveTest</span>
                     </div>
                 </div>
             </div>
@@ -32,20 +36,6 @@
                         Posted by
                         <a href="#!">DriveTest Center</a>
                         on May 24, 2024
-                    </p>
-                </div>
-                <!-- Divider-->
-                <hr class="my-4" />
-                <!-- Post preview-->
-                <div class="post-preview">
-                    <a href="#!">
-                        <h2 class="post-title">Outstanding Service at the New Drive Test Center</h2>
-                        <h3 class="post-subtitle">"The staff were incredibly helpful and made the process smooth and stress-free!"</h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#!">Jon Jones</a>
-                        on April 17, 2024
                     </p>
                 </div>
                 <!-- Divider-->

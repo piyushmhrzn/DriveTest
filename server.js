@@ -3,85 +3,48 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
-const UserController = require('./controllers/userController');
+const flash = require('connect-flash');
+const UserController = require('./controllers/UserController');
+const PageController = require('./controllers/PageController');
+const AuthController = require('./controllers/AuthController');
 const authMiddleware = require('./middleware/authMiddleware');
-const User = require('./models/User');
+const flashMiddleware = require('./middleware/flashMiddleware');
+const config = require('./config');
+const app = new express(); // Use express
 const port = 3000;
 
-const app = new express();
-
+// Middlewares
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }));
+
+// Session setup
+app.use(session({ secret: config.SESSION_SECRET, resave: false, saveUninitialized: true }));
+
+// Flash setup
+app.use(flash());
+app.use(flashMiddleware);
 
 // Connect to MongodDB
-mongoose.connect('mongodb+srv://piyushmhzrn:206E9C9271@cluster0.egbj65n.mongodb.net/')
+mongoose.connect(config.MONGODB_URI)
     .then(() => { console.log('Successfully connected to MonogDB'); })
     .catch((error) => { console.log('ERROR: ', error); });
 
-// ROUTES
-app.get('/', (req, res) => {
-    res.render('index');
-});
+// Page Routes
+app.get('/', PageController.homePage);
+app.get('/g', authMiddleware, PageController.gPage);
+app.get('/g2', authMiddleware, PageController.g2Page);
+app.get('/logout', authMiddleware, PageController.logout);
+app.get('/login', PageController.login);
 
-app.get('/g', authMiddleware, async (req, res) => {
-    try {
-        const user = await User.findById(req.session.user.userId);
+// Login/Signup Routes
+app.post('/signUpUser', AuthController.signUpUser);
+app.post('/loginUser', AuthController.loginUser);
 
-        if (!user) {
-            return res.redirect('/login');
-        }
+// User routes
+app.post('/updateUserDetails', UserController.updateUserDetails);
+app.post('/updateCarDetails', UserController.updateCarDetails);
 
-        const licenseMatch = await bcrypt.compare('LICENSE123', user.license);
-
-        if (licenseMatch) {
-            return res.render('gTest', { user, isDefaultLicense: true });
-        }
-
-        res.render('gTest', { user, isDefaultLicense: false });
-    } catch (error) {
-        console.error('ERROR:', error);
-        res.redirect('/login');
-    }
-});
-
-app.get('/g2', authMiddleware, async (req, res) => {
-    try {
-        const user = await User.findById(req.session.user.userId);
-
-        if (!user) {
-            return res.redirect('/login');
-        }
-
-        const licenseMatch = await bcrypt.compare('LICENSE123', user.license);
-
-        if (licenseMatch) {
-            return res.render('g2Test', { user, isDefaultLicense: true });
-        }
-
-        res.render('g2Test', { user, isDefaultLicense: false });
-    } catch (error) {
-        console.error('ERROR:', error);
-        res.redirect('/login');
-    }
-});
-
-app.get('/login', (req, res) => {
-    res.render('login');
-});
-
-app.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/login');
-});
-
-// User Routes
-app.post('/signUpUser', UserController.signUpUser);
-app.post('/loginUser', UserController.loginUser);
-app.post('/saveUserData', UserController.saveUserData);
-app.post('/updateCarDetail', UserController.updateCarDetails);
-
+// Live Server
 app.listen(port, () => { console.log(`App listening on port: ${port}`); });

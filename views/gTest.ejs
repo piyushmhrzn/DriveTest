@@ -24,7 +24,10 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <h3 class="post-title">Book a G Road Test</h3>
-                    <div id="alertMessageBox"></div>
+                    
+                    <!-- Flash messages -->
+                    <%- include('layouts/alertMessage') -%>
+
                     <div class="my-1">
                         <div class="row gx-4 gx-lg-5 justify-content-center">
                             <div class="col-md-12 col-lg-12 col-xl-12">
@@ -39,7 +42,7 @@
                                     <p class="post-meta"><b>Date of Birth:</b> <%= user.dob.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></p>
                                     <hr />
                                     <h4 class="post-title">Car Info</h4>
-                                    <form method="post" action="/updateCarDetail" id="carDetailForm">
+                                    <form method="post" action="/updateCarDetails" id="carDetailForm">
                                         <div class="row justify-space-between">
                                             <div class="col-lg-6 col-md-6 col-sm-12">
                                                 <!-- Company -->
@@ -87,15 +90,5 @@
 
     <%- include('layouts/footer') -%>
     <%- include('layouts/scripts') -%>
-    <script>
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('success') && urlParams.get('success') === 'success_form') {
-                $('#alertMessageBox').html('<div class="alert alert-success" role="alert">Car Details updated successfully.</div>');
-            } else if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
-                $('#alertMessageBox').html('<div class="alert alert-danger" role="alert">Failed to update car details. Please try again.</div>');
-            }
-        });
-    </script>
 </body>
 </html>

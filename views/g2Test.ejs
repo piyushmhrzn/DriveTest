@@ -24,11 +24,13 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Update your information for booking your g2 test</p>
-                    <div id="alertMessageBox"></div>
-                    <div class="my-5">
 
+                    <!-- Flash messages -->
+                    <%- include('layouts/alertMessage') -%>
+
+                    <div class="my-5">
                         <% if (isDefaultLicense) { %>
-                            <form method="post" action="/saveUserData" id="defaultUserInfo" >
+                            <form method="post" action="/updateUserDetails">
                                 <p class="text-center text-uppercase">Personal Information</p>
                                 <div class="row justify-space-between">
                                     <div class="col-lg-6 col-md-6 col-sm-12">
@@ -108,21 +110,21 @@
                                 <button class="btn btn-primary text-uppercase" id="saveButton" type="submit">Save</button>
                             </form>
                         <% } else { %>
-                            <form method="post" action="/saveUserData" id="updatedUserInfo" >
+                            <form method="post" action="/updateUserDetails">
                                 <p class="text-center text-uppercase">Personal Information</p>
                                 <div class="row justify-space-between">
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- First Name -->
                                         <div class="form-floating">
                                             <input class="form-control" id="firstNameUpdated" name="firstName" type="text" value="<%= user.firstName %>" required/>
-                                            <label for="firstName">First Name</label>
+                                            <label for="firstNameUpdated">First Name</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Last Name -->
                                         <div class="form-floating">
                                             <input class="form-control" id="lastNameUpdated" name="lastName" type="text" value="<%= user.lastName %>" required/>
-                                            <label for="lastName">Last Name</label>
+                                            <label for="lastNameUpdated">Last Name</label>
                                         </div>
                                     </div>
                                 </div>                           
@@ -131,14 +133,14 @@
                                         <!-- Age-->
                                         <div class="form-floating">
                                             <input class="form-control" id="ageUpdated" name="age" type="number" value="<%= user.age %>" required/>
-                                            <label for="age">Age</label>
+                                            <label for="ageUpdated">Age</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Date of Birth -->
                                         <div class="form-floating">
                                             <input class="form-control" id="dobUpdated" name="dob" type="date" value="<%= user.dob.toISOString().split('T')[0] %>" required/>
-                                            <label for="dob">Date of Birth</label>
+                                            <label for="dobUpdated">Date of Birth</label>
                                         </div>
                                     </div>
                                 </div>
@@ -151,14 +153,14 @@
                                         <!-- Company -->
                                         <div class="form-floating">
                                             <input class="form-control" id="companyUpdated" name="carDetails[company]" type="text" value="<%= user.carDetails.company %>"/>
-                                            <label for="company">Company</label>
+                                            <label for="companyUpdated">Company</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Model -->
                                         <div class="form-floating">
                                             <input class="form-control" id="modelUpdated" name="carDetails[model]" type="text" value="<%= user.carDetails.model %>"/>
-                                            <label for="model">Model</label>
+                                            <label for="modelUpdated">Model</label>
                                         </div>
                                     </div>
                                 </div>      
@@ -167,14 +169,14 @@
                                         <!-- Year -->
                                         <div class="form-floating">
                                             <input class="form-control" id="yearUpdated" name="carDetails[year]" type="text" value="<%= user.carDetails.year %>"/>
-                                            <label for="year">Year Released</label>
+                                            <label for="yearUpdated">Year Released</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Plate Number -->
                                         <div class="form-floating">
                                             <input class="form-control" id="plateNumberUpdated" name="carDetails[plateNumber]" type="text" value="<%= user.carDetails.plateNumber %>"/>
-                                            <label for="plateNumber">Plate number</label>
+                                            <label for="plateNumberUpdated">Plate number</label>
                                         </div>
                                     </div>
                                 </div>
@@ -191,15 +193,5 @@
 
     <%- include('layouts/footer') -%>
     <%- include('layouts/scripts') -%>
-    <script>
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('success') && urlParams.get('success') === 'success_form') {
-                $('#alertMessageBox').html('<div class="alert alert-success" role="alert">User details updated successfully.</div>');
-            } else if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
-                $('#alertMessageBox').html('<div class="alert alert-danger" role="alert">Failed to update user details. Please try again.</div>');
-            }
-        });
-    </script>
 </body>
 </html>
