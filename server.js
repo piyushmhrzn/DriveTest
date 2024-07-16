@@ -7,6 +7,7 @@ const flash = require('connect-flash');
 const UserController = require('./controllers/UserController');
 const PageController = require('./controllers/PageController');
 const AuthController = require('./controllers/AuthController');
+const AdminController = require('./controllers/AdminController');
 const authMiddleware = require('./middleware/authMiddleware');
 const flashMiddleware = require('./middleware/flashMiddleware');
 const config = require('./config');
@@ -33,18 +34,21 @@ mongoose.connect(config.MONGODB_URI)
 
 // Page Routes
 app.get('/', PageController.homePage);
-app.get('/g', authMiddleware, PageController.gPage);
-app.get('/g2', authMiddleware, PageController.g2Page);
-app.get('/logout', authMiddleware, PageController.logout);
+app.get('/g', authMiddleware('driver'), PageController.gPage);
+app.get('/g2', authMiddleware('driver'), PageController.g2Page);
+app.get('/logout', authMiddleware('driver'), PageController.logout);
 app.get('/login', PageController.login);
 
-// Login/Signup Routes
+// Authentication
 app.post('/signUpUser', AuthController.signUpUser);
 app.post('/loginUser', AuthController.loginUser);
 
-// User routes
+// User
 app.post('/updateUserDetails', UserController.updateUserDetails);
 app.post('/updateCarDetails', UserController.updateCarDetails);
+
+// Admin
+app.get('/appointment', authMiddleware('admin'), AdminController.appointment);
 
 // Live Server
 app.listen(port, () => { console.log(`App listening on port: ${port}`); });
