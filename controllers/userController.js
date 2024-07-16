@@ -81,7 +81,8 @@ exports.saveUserData = async (req, res) => {
         };
 
         await User.findByIdAndUpdate(userId, updatedData, { new: true });
-        res.redirect('/g');
+        req.session.success_msg = 'User details updated successfully.';
+        res.redirect('/g2?success=success_form');
     } catch (error) {
         console.error('ERROR:', error);
         req.session.error_msg = 'Failed to update user info. Please try again.';
@@ -92,7 +93,7 @@ exports.saveUserData = async (req, res) => {
 // Update only the car details of the user in G page form
 exports.updateCarDetails = async (req, res) => {
     try {
-        const license_number = req.body.license_number;
+        const userId = req.session.user.userId;
 
         const updatedCarDetails = {
             'carDetails.company': req.body.company,
@@ -101,17 +102,14 @@ exports.updateCarDetails = async (req, res) => {
             'carDetails.plateNumber': req.body.plateNumber
         };
 
-        const user = await User.findOneAndUpdate(
-            { license: license_number },
-            { $set: updatedCarDetails },
-            { new: true }
-        );
+        const user = await User.findByIdAndUpdate(userId, { $set: updatedCarDetails }, { new: true });
 
         if (!user) {
             return res.render('gTest');
         }
 
-        res.redirect('/g');
+        req.session.success_msg = 'Car Details updated successfully.';
+        res.redirect('/g?success=success_form');
     } catch (error) {
         console.error('ERROR:', error);
         req.session.error_msg = 'Failed to update car details. Please try again.';

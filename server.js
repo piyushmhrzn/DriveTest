@@ -84,6 +84,4 @@ app.post('/loginUser', UserController.loginUser);
 app.post('/saveUserData', UserController.saveUserData);
 app.post('/updateCarDetail', UserController.updateCarDetails);
 
-app.listen(port, () => {
-    console.log(`App listening on port: ${port}`);
-});
+app.listen(port, () => { console.log(`App listening on port: ${port}`); });

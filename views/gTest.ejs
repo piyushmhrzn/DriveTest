@@ -24,6 +24,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <h3 class="post-title">Book a G Road Test</h3>
+                    <div id="alertMessageBox"></div>
                     <div class="my-1">
                         <div class="row gx-4 gx-lg-5 justify-content-center">
                             <div class="col-md-12 col-lg-12 col-xl-12">
@@ -71,8 +72,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="hidden" name="license_number" value="<%= user.license %>">   
-                                        <div id="alertMessageBox"></div>
                                         <br />
                                         <!-- Update Button-->
                                         <button class="btn btn-success text-uppercase" id="updateButton" type="submit">Update</button>     
@@ -91,7 +90,9 @@
     <script>
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
+            if (urlParams.has('success') && urlParams.get('success') === 'success_form') {
+                $('#alertMessageBox').html('<div class="alert alert-success" role="alert">Car Details updated successfully.</div>');
+            } else if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
                 $('#alertMessageBox').html('<div class="alert alert-danger" role="alert">Failed to update car details. Please try again.</div>');
             }
         });

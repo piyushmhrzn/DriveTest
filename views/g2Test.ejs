@@ -150,14 +150,14 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Company -->
                                         <div class="form-floating">
-                                            <input class="form-control" id="companyUpdated" name="company" type="text" value="<%= user.carDetails.company %>"/>
+                                            <input class="form-control" id="companyUpdated" name="carDetails[company]" type="text" value="<%= user.carDetails.company %>"/>
                                             <label for="company">Company</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Model -->
                                         <div class="form-floating">
-                                            <input class="form-control" id="modelUpdated" name="model" type="text" value="<%= user.carDetails.model %>"/>
+                                            <input class="form-control" id="modelUpdated" name="carDetails[model]" type="text" value="<%= user.carDetails.model %>"/>
                                             <label for="model">Model</label>
                                         </div>
                                     </div>
@@ -166,14 +166,14 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Year -->
                                         <div class="form-floating">
-                                            <input class="form-control" id="yearUpdated" name="year" type="text" value="<%= user.carDetails.year %>"/>
+                                            <input class="form-control" id="yearUpdated" name="carDetails[year]" type="text" value="<%= user.carDetails.year %>"/>
                                             <label for="year">Year Released</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <!-- Plate Number -->
                                         <div class="form-floating">
-                                            <input class="form-control" id="plateNumberUpdated" name="plateNumber" type="text" value="<%= user.carDetails.plateNumber %>"/>
+                                            <input class="form-control" id="plateNumberUpdated" name="carDetails[plateNumber]" type="text" value="<%= user.carDetails.plateNumber %>"/>
                                             <label for="plateNumber">Plate number</label>
                                         </div>
                                     </div>
@@ -194,8 +194,10 @@
     <script>
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
-                $('#alertMessageBox').html('<div class="alert alert-danger" role="alert">Failed to update user info. Please try again.</div>');
+            if (urlParams.has('success') && urlParams.get('success') === 'success_form') {
+                $('#alertMessageBox').html('<div class="alert alert-success" role="alert">User details updated successfully.</div>');
+            } else if (urlParams.has('error') && urlParams.get('error') === 'error_update') {
+                $('#alertMessageBox').html('<div class="alert alert-danger" role="alert">Failed to update user details. Please try again.</div>');
             }
         });
     </script>
