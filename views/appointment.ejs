@@ -21,7 +21,7 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <p>Available Appointment Slots for <b><%= appointmentDate %></b></p>
+                <p>Available Appointment Slots for <b><%= formattedDate %></b></p>
 
                     <!-- Flash messages -->
                     <%- include('layouts/alertMessage') -%>
@@ -29,9 +29,9 @@
                     <div class="my-5">
                         <form method="post" action="/addAppointment">
                             <input type="hidden" name="date" value="<%= appointmentDate %>">
-                            <% availableTimes.forEach(time => { %>
-                                <button class="btn btn-warning text-uppercase mb-2" type="submit" name="time" value="<%= time %>">
-                                    <%= time %>
+                            <% appointmentsMap.forEach(slot => { %>
+                                <button class="btn btn-warning text-uppercase mb-2" type="submit" name="time" value="<%= slot.time %>" <%= slot.isTimeSlotAvailable ? '' : 'disabled' %>>
+                                    <%= slot.time %>
                                 </button>
                             <% }); %>
                         </form>
