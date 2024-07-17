@@ -49,6 +49,7 @@ app.post('/updateCarDetails', UserController.updateCarDetails);
 
 // Admin
 app.get('/appointment', authMiddleware('admin'), AdminController.appointment);
+app.post('/addAppointment', AdminController.addAppointment);
 
 // Live Server
 app.listen(port, () => { console.log(`App listening on port: ${port}`); });
