@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const appointmentSchema = new Schema({
     date: { type: Date, required: true },
     time: { type: String, required: true },
-    isTimeSlotAvailable: { type: Boolean, default: true }
+    isTimeSlotAvailable: { type: Boolean, default: false }
 });
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);

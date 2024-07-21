@@ -23,12 +23,49 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <p>Update your information for booking your g2 test</p>
+                    <p>Update your information below to book your g2 test right now:</p>
 
                     <!-- Flash messages -->
                     <%- include('layouts/alertMessage') -%>
 
                     <div class="my-5">
+                        <% if (bookedAppointment) { %>
+                            <div class="alert alert-secondary" role="alert">
+                                You have booked your appointment on <b><%= bookedAppointment.date.toISOString().split('T')[0] %></b> at <b><%= bookedAppointment.time %></b>.
+                            </div>
+                        <% } else { %>
+                            <!-- Appointment Booking Form -->
+                            <form method="post" action="/bookAppointment">
+                                <p class="text-center text-uppercase">Book Appointment</p>
+
+                                <!-- Select Date -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="appointment" name="appointment" type="date" value="<%= selectedDate %>" required>
+                                    <label for="appointment">Select Date</label>
+                                </div>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-9 col-md-8 col-sm-12">
+                                        <div class="form-floating mb-3">
+
+                                            <!-- Timeslot Dropdown -->
+                                            <select class="form-select" id="time" name="time" required>
+                                                <option value="" disabled selected>Select a time slot</option>
+                                                <% existingAppointments.forEach(slot => { %>
+                                                    <option value="<%= slot._id %>"><%= slot.time %></option>
+                                                <% }); %>
+                                            </select>
+                                            <label for="time">Select Time Slot</label>
+                                        </div>
+                                    </div>  
+                                    <div class="col-lg-3 col-md-4 col-sm-12">
+                                        <button class="btn btn-success btn-block text-uppercase" id="bookAppointment" type="submit" style="width: 100%; height: auto;">Book</button>
+                                    </div>                 
+                                </div>
+                            </form>
+                        <% } %>
+
+                        <br />
+
                         <% if (isDefaultLicense) { %>
                             <form method="post" action="/updateUserDetails">
                                 <p class="text-center text-uppercase">Personal Information</p>
@@ -105,9 +142,11 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <br />
+
                                 <!-- Submit Button-->
-                                <button class="btn btn-primary text-uppercase" id="saveButton" type="submit">Save</button>
+                                <button class="btn btn-primary text-uppercase" id="saveButton" type="submit" style="width: 100%; height: auto;">Save</button>
                             </form>
                         <% } else { %>
                             <form method="post" action="/updateUserDetails">
@@ -182,7 +221,7 @@
                                 </div>
                                 <br />
                                 <!-- Submit Button-->
-                                <button class="btn btn-primary text-uppercase" id="updateButton" type="submit">Save</button>
+                                <button class="btn btn-primary text-uppercase" id="updateButton" type="submit" style="width: 100%; height: auto;">Update</button>
                             </form>
                         <% } %>
                     </div>
@@ -193,5 +232,13 @@
 
     <%- include('layouts/footer') -%>
     <%- include('layouts/scripts') -%>
+    <script>
+        $(document).ready(function() {
+            $('#appointment').on('change', function() {
+                const selectedDate = this.value;
+                window.location.href = `/g2?date=${selectedDate}`;
+            });
+        });
+    </script>
 </body>
 </html>

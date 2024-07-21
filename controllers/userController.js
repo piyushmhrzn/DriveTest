@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Appointment = require('../models/Appointment');
 
 // UPDATE USER DETAILS FROM G2 PAGE
 exports.updateUserDetails = async (req, res) => {
@@ -70,4 +71,34 @@ exports.updateCarDetails = async (req, res) => {
     }
 };
 
+// BOOK APPOINTMENT SLOT
+exports.bookAppointment = async (req, res) => {
+    try {
+        const { appointment, time } = req.body;
+
+        // Find selected appointment slot by id
+        const appointmentSlot = await Appointment.findById(time);
+
+        if (!appointmentSlot || !appointmentSlot.isTimeSlotAvailable) {
+            req.flash('error_msg', 'Time slot is no longer available.');
+            return res.redirect(`/g2?date=${appointment}`);
+        }
+
+        // Update appointment slot by changing isTimeSlotAvailable flag to false
+        appointmentSlot.isTimeSlotAvailable = false;
+        await appointmentSlot.save();
+
+        // Update user's appointment id
+        const user = await User.findById(req.session.user.userId);
+        user.appointmentId = appointmentSlot._id;
+        await user.save();
+
+        req.flash('success_msg', 'Appointment booked successfully.');
+        res.redirect('/g2');
+    } catch (error) {
+        console.error('ERROR: ', error);
+        req.flash('error_msg', 'Failed to book appointment');
+        res.redirect('/g2');
+    }
+};
 

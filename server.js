@@ -46,6 +46,7 @@ app.post('/loginUser', AuthController.loginUser);
 // User
 app.post('/updateUserDetails', UserController.updateUserDetails);
 app.post('/updateCarDetails', UserController.updateCarDetails);
+app.post('/bookAppointment', UserController.bookAppointment);
 
 // Admin
 app.get('/appointment', authMiddleware('admin'), AdminController.appointment);

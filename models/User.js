@@ -16,6 +16,10 @@ const userSchema = new Schema({
         model: { type: String, default: 'Civic' },
         year: { type: Number, default: 2022 },
         plateNumber: { type: String, default: 'HCB22G' }
+    },
+    appointmentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Appointment'
     }
 });
 
