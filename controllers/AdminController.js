@@ -32,7 +32,7 @@ exports.appointment = async (req, res) => {
                 isBooked: isBooked
             };
         });
-        console.log(appointmentsMap);
+
         res.render('appointment', { user, appointmentDate: selectedDate, appointmentsMap });
     } catch (error) {
         console.error('ERROR:', error);
@@ -49,7 +49,7 @@ exports.addAppointment = async (req, res) => {
         const existingAppointment = await Appointment.findOne({ date, time });
 
         // Check if the appointment slot already booked by the user
-        if (!existingAppointment.isTimeSlotAvailable) {
+        if (existingAppointment && !existingAppointment.isTimeSlotAvailable) {
             req.flash('error_msg', 'This appointment slot is already booked by a driver.');
             return res.redirect(`/appointment?date=${date}`);
         }
