@@ -25,7 +25,9 @@ const userSchema = new Schema({
         type: String,
         enum: ['G', 'G2'],
         default: null
-    }
+    },
+    comment: { type: String, default: '' },
+    passFail: { type: Boolean, default: null }
 });
 
 // Encrypting license number before saving to database

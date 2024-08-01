@@ -96,24 +96,3 @@ exports.logout = (req, res) => {
     req.session.destroy();
     res.redirect('/login');
 };
-
-// RENDER EXAMINER PAGE
-exports.examiner = async (req, res) => {
-    try {
-        // Get user details from database by matching id
-        const user = await User.findById(req.session.user.userId);
-
-        // Redirect to login if user doesn't exist
-        if (!user) { return res.redirect('/login'); }
-
-        // Default to 'G2' test booked drivers
-        const testType = req.query.testType || 'G2';
-        const drivers = await User.find({ testType }).populate('appointmentId');
-
-        // Render examiner page with user data and test type
-        res.render('examiner', { user, drivers, testType });
-    } catch (error) {
-        console.error('ERROR:', error);
-        res.redirect('/login');
-    }
-};

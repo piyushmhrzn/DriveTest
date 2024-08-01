@@ -29,9 +29,16 @@
 
                     <div class="my-1">
                         <% if (bookedAppointment) { %>
-                            <div class="alert alert-secondary" role="alert">
-                                You have booked your <%= user.testType %> appointment on <b><%= bookedAppointment.date.toISOString().split('T')[0] %></b> at <b><%= bookedAppointment.time %></b>.
-                            </div>
+                            <% if (user.passFail !== null) { %>
+                                <div class="alert alert-secondary" role="alert">
+                                    <b>Status:</b> <%= user.passFail ? 'PASS' : 'FAIL'  %> (<%= user.testType %> test)<br>
+                                    <b>Comment:</b> <%= user.comment %>
+                                </div>
+                            <% } else { %>
+                                <div class="alert alert-secondary" role="alert">
+                                    You have booked your <%= user.testType %> appointment on <b><%= bookedAppointment.date.toDateString() %></b> at <b><%= bookedAppointment.time %></b>.
+                                </div>
+                            <% } %>
                         <% } else { %>
                             <!-- Appointment Booking Form -->
                             <form method="post" action="/bookAppointment">

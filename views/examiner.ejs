@@ -41,12 +41,29 @@
                         <!-- User's who have appointments -->
                          <p class="post-meta">Booked Appointments</p>
                         <ul class="list-group mt-4">
-                            <% drivers.forEach(user => { %>
+                            <% drivers.forEach(driver => { %>
                                 <li class="list-group-item">
-                                    <strong>Name:</strong> <%= user.firstName %> <%= user.lastName %> <br>
-                                    <strong>Car Model:</strong> <%= user.carDetails.model %> <br>
-                                    <strong>Appointment Date:</strong> <%= user.appointmentId.date.toDateString() %> <br>
-                                    <strong>Appointment Time:</strong> <%= user.appointmentId.time %> <br>
+                                    <strong>Name:</strong> <%= driver.firstName %> <%= driver.lastName %> <br>
+                                    <strong>Car:</strong> <%= driver.carDetails.company %> <%= driver.carDetails.model %> <br>
+                                    <strong>Appointment Date:</strong> <%= driver.appointmentId.date.toDateString() %> <br>
+                                    <strong>Appointment Time:</strong> <%= driver.appointmentId.time %> <br>
+
+                                     <!-- Form to update test result -->
+                                    <form method="post" action="/updateTestResult" class="mt-3">
+                                        <div class="form-floating mb-3">
+                                            <textarea name="comment" id="comment" class="form-control"><%= driver.comment %></textarea>
+                                            <label for="comment">Add Comment for the Driver:</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <select name="passFail" id="passFail" class="form-select">
+                                                <option value="true" <%= driver.passFail === true ? 'selected' : '' %>>Pass</option>
+                                                <option value="false" <%= driver.passFail === false ? 'selected' : '' %>>Fail</option>
+                                            </select>
+                                            <label for="passFail">Update Pass/Fail Status of Driver:</label>
+                                        </div>
+                                        <input type="hidden" name="userId" value="<%= driver._id %>">
+                                        <button type="submit" class="btn btn-primary text-uppercase" style="width: 100%; height: auto;">Post</button>
+                                    </form>
                                 </li>
                             <% }) %>
                         </ul>

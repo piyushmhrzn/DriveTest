@@ -44,6 +44,33 @@
                             <% }); %>
                         </form>
                     </div>
+
+                    <div class="my-5">
+                        <h3 class="text-center">Candidate Lists</h3>
+                        <!-- List of Passed Candidates -->
+                        <div class="post-preview">
+                            <p class="post-meta">Passed Candidates:</p>
+                            <ul class="list-group mt-4">
+                                <% passCandidates.forEach(candidate => { %>
+                                    <li class="list-group-item">
+                                        <strong>Name:</strong> <%= candidate.firstName %> <%= candidate.lastName %>
+                                    </li>
+                                <% }) %>
+                            </ul>
+
+                            <br /><hr>
+    
+                            <!-- List of Failed Candidates -->
+                            <p class="post-meta">Failed Candidates:</p>
+                            <ul class="list-group mt-4">
+                                <% failCandidates.forEach(candidate => { %>
+                                    <li class="list-group-item">
+                                        <strong>Name:</strong> <%= candidate.firstName %> <%= candidate.lastName %>
+                                    </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

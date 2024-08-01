@@ -33,7 +33,11 @@ exports.appointment = async (req, res) => {
             };
         });
 
-        res.render('appointment', { user, appointmentDate: selectedDate, appointmentsMap });
+        // Fetch pass and fail candidates
+        const passCandidates = await User.find({ passFail: true });
+        const failCandidates = await User.find({ passFail: false });
+
+        res.render('appointment', { user, appointmentDate: selectedDate, appointmentsMap, passCandidates, failCandidates });
     } catch (error) {
         console.error('ERROR:', error);
         res.redirect('/login');

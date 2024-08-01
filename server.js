@@ -8,6 +8,7 @@ const UserController = require('./controllers/UserController');
 const PageController = require('./controllers/PageController');
 const AuthController = require('./controllers/AuthController');
 const AdminController = require('./controllers/AdminController');
+const ExaminerController = require('./controllers/ExaminerController');
 const authMiddleware = require('./middleware/authMiddleware');
 const flashMiddleware = require('./middleware/flashMiddleware');
 const config = require('./config');
@@ -53,7 +54,8 @@ app.get('/appointment', authMiddleware('admin'), AdminController.appointment);
 app.post('/addAppointment', AdminController.addAppointment);
 
 // Examiner
-app.get('/examiner', authMiddleware('examiner'), PageController.examiner);
+app.get('/examiner', authMiddleware('examiner'), ExaminerController.examiner);
+app.post('/updateTestResult', ExaminerController.updateTestResult);
 
 // Live Server
 app.listen(port, () => { console.log(`App listening on port: ${port}`); });
