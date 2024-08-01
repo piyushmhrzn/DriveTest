@@ -23,7 +23,6 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <p>Update your information below to book your g2 test right now:</p>
 
                     <!-- Flash messages -->
                     <%- include('layouts/alertMessage') -%>
@@ -31,12 +30,12 @@
                     <div class="my-5">
                         <% if (bookedAppointment) { %>
                             <div class="alert alert-secondary" role="alert">
-                                You have booked your appointment on <b><%= bookedAppointment.date.toISOString().split('T')[0] %></b> at <b><%= bookedAppointment.time %></b>.
+                                You have booked your <%= user.testType %> appointment on <b><%= bookedAppointment.date.toISOString().split('T')[0] %></b> at <b><%= bookedAppointment.time %></b>.
                             </div>
                         <% } else { %>
                             <!-- Appointment Booking Form -->
                             <form method="post" action="/bookAppointment">
-                                <p class="text-center text-uppercase">Book Appointment</p>
+                                <p class="text-center text-uppercase">Book your G2 Test Appointment</p>
 
                                 <!-- Select Date -->
                                 <div class="form-floating mb-3">
@@ -57,6 +56,10 @@
                                             <label for="time">Select Time Slot</label>
                                         </div>
                                     </div>  
+
+                                    <!-- Hidden input to pass test type -->
+                                    <input type="hidden" name="test" value="<%= test %>">
+                                    
                                     <div class="col-lg-3 col-md-4 col-sm-12">
                                         <button class="btn btn-success btn-block text-uppercase" id="bookAppointment" type="submit" style="width: 100%; height: auto;">Book</button>
                                     </div>                 
@@ -64,7 +67,7 @@
                             </form>
                         <% } %>
 
-                        <br />
+                        <br /><hr />
 
                         <% if (isDefaultLicense) { %>
                             <form method="post" action="/updateUserDetails">

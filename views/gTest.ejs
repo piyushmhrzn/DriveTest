@@ -23,16 +23,56 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <h3 class="post-title">Book a G Road Test</h3>
                     
                     <!-- Flash messages -->
                     <%- include('layouts/alertMessage') -%>
 
                     <div class="my-1">
+                        <% if (bookedAppointment) { %>
+                            <div class="alert alert-secondary" role="alert">
+                                You have booked your <%= user.testType %> appointment on <b><%= bookedAppointment.date.toISOString().split('T')[0] %></b> at <b><%= bookedAppointment.time %></b>.
+                            </div>
+                        <% } else { %>
+                            <!-- Appointment Booking Form -->
+                            <form method="post" action="/bookAppointment">
+                                <p class="text-center text-uppercase">Book your G Test Appointment</p>
+
+                                <!-- Select Date -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="appointment" name="appointment" type="date" value="<%= selectedDate %>" required>
+                                    <label for="appointment">Select Date</label>
+                                </div>
+                                <div class="row justify-space-between">
+                                    <div class="col-lg-9 col-md-8 col-sm-12">
+                                        <div class="form-floating mb-3">
+
+                                            <!-- Timeslot Dropdown -->
+                                            <select class="form-select" id="time" name="time" required>
+                                                <option value="" disabled selected>Select a time slot</option>
+                                                <% existingAppointments.forEach(slot => { %>
+                                                    <option value="<%= slot._id %>"><%= slot.time %></option>
+                                                <% }); %>
+                                            </select>
+                                            <label for="time">Select Time Slot</label>
+                                        </div>
+                                    </div>  
+
+                                    <!-- Hidden input to pass test type -->
+                                    <input type="hidden" name="test" value="<%= test %>">
+                                    
+                                    <div class="col-lg-3 col-md-4 col-sm-12">
+                                        <button class="btn btn-success btn-block text-uppercase" id="bookAppointment" type="submit" style="width: 100%; height: auto;">Book</button>
+                                    </div>                 
+                                </div>
+                            </form>
+                        <% } %>
+
+                        <br /><hr />
+
                         <div class="row gx-4 gx-lg-5 justify-content-center">
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <div class="post-preview">
-                                    <p style="font-size: 0.875em; margin: 0.8rem 0 2.5rem;">Please check/update your information.</p> 
+                                    <h4 class="post-title mb-3">Personal Info</h4>
                                     <p class="post-meta"><b>First Name:</b> <%= user.firstName %></p>
                                     <p class="post-meta"><b>Last Name:</b> <%= user.lastName %></p>
                                     <% if (isDefaultLicense) { %>
@@ -90,5 +130,13 @@
 
     <%- include('layouts/footer') -%>
     <%- include('layouts/scripts') -%>
+    <script>
+        $(document).ready(function() {
+            $('#appointment').on('change', function() {
+                const selectedDate = this.value;
+                window.location.href = `/g?date=${selectedDate}`;
+            });
+        });
+    </script>
 </body>
 </html>

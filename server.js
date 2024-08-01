@@ -52,5 +52,8 @@ app.post('/bookAppointment', UserController.bookAppointment);
 app.get('/appointment', authMiddleware('admin'), AdminController.appointment);
 app.post('/addAppointment', AdminController.addAppointment);
 
+// Examiner
+app.get('/examiner', authMiddleware('examiner'), PageController.examiner);
+
 // Live Server
 app.listen(port, () => { console.log(`App listening on port: ${port}`); });

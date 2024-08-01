@@ -20,6 +20,11 @@ const userSchema = new Schema({
     appointmentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Appointment'
+    },
+    testType: {
+        type: String,
+        enum: ['G', 'G2'],
+        default: null
     }
 });
 

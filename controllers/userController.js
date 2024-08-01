@@ -74,7 +74,7 @@ exports.updateCarDetails = async (req, res) => {
 // BOOK APPOINTMENT SLOT
 exports.bookAppointment = async (req, res) => {
     try {
-        const { appointment, time } = req.body;
+        const { appointment, time, test } = req.body;
 
         // Find selected appointment slot by id
         const appointmentSlot = await Appointment.findById(time);
@@ -91,6 +91,8 @@ exports.bookAppointment = async (req, res) => {
         // Update user's appointment id
         const user = await User.findById(req.session.user.userId);
         user.appointmentId = appointmentSlot._id;
+        user.testType = test;   // Update user's testType
+
         await user.save();
 
         req.flash('success_msg', 'Appointment booked successfully.');
