@@ -4,15 +4,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-const UserController = require('./controllers/UserController');
-const PageController = require('./controllers/PageController');
-const AuthController = require('./controllers/AuthController');
-const AdminController = require('./controllers/AdminController');
-const ExaminerController = require('./controllers/ExaminerController');
-const authMiddleware = require('./middleware/authMiddleware');
 const flashMiddleware = require('./middleware/flashMiddleware');
 const config = require('./config');
-const app = new express(); // Use express
+const routes = require('./routes/routes');
+const app = express();
 const port = 3000;
 
 // Middlewares
@@ -28,34 +23,13 @@ app.use(session({ secret: config.SESSION_SECRET, resave: false, saveUninitialize
 app.use(flash());
 app.use(flashMiddleware);
 
-// Connect to MongodDB
+// Connect to MongoDB
 mongoose.connect(config.MONGODB_URI)
-    .then(() => { console.log('Successfully connected to MonogDB'); })
+    .then(() => { console.log('Successfully connected to MongoDB'); })
     .catch((error) => { console.log('ERROR: ', error); });
 
-// Page Routes
-app.get('/', PageController.homePage);
-app.get('/g', authMiddleware('driver'), PageController.gPage);
-app.get('/g2', authMiddleware('driver'), PageController.g2Page);
-app.get('/logout', authMiddleware('driver'), PageController.logout);
-app.get('/login', PageController.login);
-
-// Authentication
-app.post('/signUpUser', AuthController.signUpUser);
-app.post('/loginUser', AuthController.loginUser);
-
-// User
-app.post('/updateUserDetails', UserController.updateUserDetails);
-app.post('/updateCarDetails', UserController.updateCarDetails);
-app.post('/bookAppointment', UserController.bookAppointment);
-
-// Admin
-app.get('/appointment', authMiddleware('admin'), AdminController.appointment);
-app.post('/addAppointment', AdminController.addAppointment);
-
-// Examiner
-app.get('/examiner', authMiddleware('examiner'), ExaminerController.examiner);
-app.post('/updateTestResult', ExaminerController.updateTestResult);
+// Routes
+app.use('/', routes);
 
 // Live Server
 app.listen(port, () => { console.log(`App listening on port: ${port}`); });

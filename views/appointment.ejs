@@ -51,9 +51,9 @@
                         <div class="post-preview">
                             <p class="post-meta">Passed Candidates:</p>
                             <ul class="list-group mt-4">
-                                <% passCandidates.forEach(candidate => { %>
+                                <% passCandidates.forEach((candidate, index) => { %>
                                     <li class="list-group-item">
-                                        <strong>Name:</strong> <%= candidate.firstName %> <%= candidate.lastName %>
+                                        <strong><%= index + 1 %>. Name:</strong> <%= candidate.firstName %> <%= candidate.lastName %>
                                     </li>
                                 <% }) %>
                             </ul>
@@ -63,9 +63,9 @@
                             <!-- List of Failed Candidates -->
                             <p class="post-meta">Failed Candidates:</p>
                             <ul class="list-group mt-4">
-                                <% failCandidates.forEach(candidate => { %>
+                                <% failCandidates.forEach((candidate, index) => { %>
                                     <li class="list-group-item">
-                                        <strong>Name:</strong> <%= candidate.firstName %> <%= candidate.lastName %>
+                                        <strong><%= index + 1 %>. Name:</strong> <%= candidate.firstName %> <%= candidate.lastName %>
                                     </li>
                                 <% }) %>
                             </ul>
